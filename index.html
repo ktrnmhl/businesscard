@@ -77,7 +77,7 @@
     cursor:pointer; list-style:none}
   .disclose > summary::-webkit-details-marker{display:none}
   .disclose > summary:focus-visible{outline:2px solid var(--signal); outline-offset:2px}
-  .disclose > summary svg{flex:none; transition:transform .18s ease; color:var(--fg-72)}
+  .disclose > summary svg{flex:none; transition:transform .18s ease; color:var(--signal)}
   .disclose[open] > summary svg{transform:rotate(180deg)}
   .disclose .inner{padding-bottom:var(--s6)}
   .disclose .inner .field:first-child{margin-top:0}
@@ -233,7 +233,7 @@
     <details class="disclose" id="more">
       <summary><span data-t="more"></span>
         <svg width="16" height="9" viewBox="0 0 16 9" fill="none" aria-hidden="true">
-          <path d="M1 1L8 8L15 1" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M1 1L8 8L15 1" stroke="currentColor" stroke-width="2.29" stroke-linecap="round" stroke-linejoin="round"/>
         </svg>
       </summary>
       <div class="inner">
