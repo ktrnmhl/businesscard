@@ -2,6 +2,9 @@
 <html lang="de">
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0B0B0C">
+<!-- Suchmuster eines QR-Codes, Frame 26. Inline, damit index.html allein lauffaehig bleibt. -->
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns=%27http://www.w3.org/2000/svg%27%20viewBox=%270%200%20100%20100%27%3E%3Crect%20width=%27100%27%20height=%27100%27%20rx=%2718.75%27%20fill=%27%23E4FF32%27/%3E%3Crect%20x=%2720%27%20y=%2720%27%20width=%2760%27%20height=%2760%27%20fill=%27%230B0B0C%27/%3E%3Crect%20x=%2728.571%27%20y=%2728.571%27%20width=%2742.857%27%20height=%2742.857%27%20fill=%27%23E4FF32%27/%3E%3Crect%20x=%2737.143%27%20y=%2737.143%27%20width=%2725.714%27%20height=%2725.714%27%20fill=%27%230B0B0C%27/%3E%3C/svg%3E">
 <title>Impressum — Sperrbildschirm-Visitenkarte</title>
 <style>
   :root{
@@ -19,7 +22,11 @@
   *{box-sizing:border-box}
   body{margin:0; background:var(--bg); color:var(--fg); font:var(--t-body); -webkit-text-size-adjust:100%}
   /* Etwas breiter als das Werkzeug (393) — laufender Text liest sich bei ~68 Zeichen besser. */
-  .wrap{width:100%; max-width:480px; margin:0 auto; padding-block:var(--s7); padding-inline:var(--s5)}
+  .wrap{width:100%; max-width:480px; margin:0 auto;
+        padding-block:calc(var(--s7) + env(safe-area-inset-top,0px))
+                     calc(var(--s7) + env(safe-area-inset-bottom,0px));
+        padding-inline:calc(var(--s5) + env(safe-area-inset-left,0px))
+                       calc(var(--s5) + env(safe-area-inset-right,0px))}
   .back{display:inline-block; font:var(--t-body); font-weight:600; color:var(--signal);
         text-decoration:underline; text-underline-offset:3px; margin-bottom:var(--s6)}
   h1{font:var(--t-display); letter-spacing:-.03em; margin:0 0 var(--s5); text-wrap:balance}

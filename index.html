@@ -1,5 +1,8 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0B0B0C">
+<!-- Suchmuster eines QR-Codes, Frame 26. Inline, damit index.html allein lauffaehig bleibt. -->
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns=%27http://www.w3.org/2000/svg%27%20viewBox=%270%200%20100%20100%27%3E%3Crect%20width=%27100%27%20height=%27100%27%20rx=%2718.75%27%20fill=%27%23E4FF32%27/%3E%3Crect%20x=%2720%27%20y=%2720%27%20width=%2760%27%20height=%2760%27%20fill=%27%230B0B0C%27/%3E%3Crect%20x=%2728.571%27%20y=%2728.571%27%20width=%2742.857%27%20height=%2742.857%27%20fill=%27%23E4FF32%27/%3E%3Crect%20x=%2737.143%27%20y=%2737.143%27%20width=%2725.714%27%20height=%2725.714%27%20fill=%27%230B0B0C%27/%3E%3C/svg%3E">
 <title>Sperrbildschirm-Visitenkarte</title>
 <style>
   /* ═══════════════════════════════════════════════════════════════════
@@ -10,6 +13,7 @@
   :root{
     --bg:#0B0B0C; --surface:#141417; --line:#2A2A2F; --raise:#2A2A2F;
     --fg:#FFFFFF; --fg-72:rgba(255,255,255,.72); --fg-50:rgba(255,255,255,.5);
+    --fg-16:rgba(255,255,255,.16);
     --signal:#E4FF32; --mark:#FF3D7F; --alarm:#FF4A1C;
 
     --face:-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif;
@@ -28,9 +32,14 @@
   html,body{height:100%}
   body{margin:0; min-height:100dvh; background:var(--bg); color:var(--fg);
        font:var(--t-body); -webkit-text-size-adjust:100%}
+  /* viewport-fit=cover zeichnet unter Notch und Home-Indikator —
+     ohne diese Abstaende verschwindet dort Inhalt. */
   .wrap{width:100%; max-width:393px; margin:0 auto; min-height:100dvh;
         display:flex; flex-direction:column;
-        padding-block:var(--s6) var(--s7); padding-inline:var(--s5)}
+        padding-block:calc(var(--s6) + env(safe-area-inset-top,0px))
+                     calc(var(--s7) + env(safe-area-inset-bottom,0px));
+        padding-inline:calc(var(--s5) + env(safe-area-inset-left,0px))
+                       calc(var(--s5) + env(safe-area-inset-right,0px))}
   #form,#result,#desktop{display:flex; flex-direction:column; flex:1}
   [hidden]{display:none!important}
 
@@ -67,7 +76,10 @@
   input[type=text],input[type=email],input[type=tel],input[type=url]{
     width:100%; height:var(--h-field); padding:0 var(--s4); font:var(--t-body); color:var(--fg);
     background:var(--surface); border:1px solid var(--line); border-radius:var(--r-field);
-    -webkit-appearance:none}
+    -webkit-appearance:none;
+    /* Figma sagt 15. iOS Safari zoomt bei Feldern unter 16 px automatisch hinein
+       und wieder heraus tut es nicht. Einziger bewusster Unterschied zum Entwurf. */
+    font-size:16px}
   input::placeholder{color:var(--fg-50)}
   input:focus-visible{outline:2px solid var(--signal); outline-offset:2px; border-color:transparent}
   input[aria-invalid="true"]{border-color:var(--alarm)}
@@ -128,7 +140,7 @@
   .shotinner{position:relative; width:160px}
   .shot img{width:160px; height:auto; display:block; border-radius:var(--s3); border:2px solid var(--signal)}
   .chip{position:absolute; left:50%; transform:translateX(-50%); bottom:10px; width:126px;
-        background:var(--signal); color:var(--bg); text-align:center;
+        background:rgba(11,11,12,.72); border:1px solid var(--fg-16); color:var(--fg); text-align:center;
         font:var(--t-micro); letter-spacing:var(--track); text-transform:uppercase;
         padding:var(--s2) 0; border-radius:4px}
   h2.sec{font:var(--t-micro); letter-spacing:var(--track); text-transform:uppercase;
@@ -170,10 +182,15 @@
   .qrcard img{width:160px; height:160px; display:block; image-rendering:pixelated}
 
   dialog#demo{width:100%; max-width:393px; max-height:100dvh; height:100dvh; margin:0 auto;
-              border:0; padding:var(--s6) var(--s5) var(--s7); background:var(--bg);
-              color:var(--fg); overflow:auto}
+              border:0; background:var(--bg); color:var(--fg); overflow:auto;
+              padding:calc(var(--s6) + env(safe-area-inset-top,0px))
+                      calc(var(--s5) + env(safe-area-inset-right,0px))
+                      calc(var(--s7) + env(safe-area-inset-bottom,0px))
+                      calc(var(--s5) + env(safe-area-inset-left,0px))}
   dialog#demo::backdrop{background:rgba(0,0,0,.72)}
   dialog#demo img{display:block; width:200px; margin:var(--s5) auto 0; border-radius:var(--s2)}
+  /* Frame 17: Marke und Erklaertext stehen zentriert, nicht linksbuendig */
+  dialog#demo h2,dialog#demo .why{text-align:center}
   dialog#demo .why{color:var(--fg-72); margin:var(--s6) 0 var(--s5)}
 
   @media (prefers-reduced-motion:no-preference){
@@ -319,6 +336,7 @@
         <span data-t="coffeeBtn"></span>
       </a>
     </div>
+    <p style="margin:var(--s6) 0 0"><button class="ghost" id="back2" type="button" data-t="back"></button></p>
     <p class="legal"><a href="impressum.html" data-t="legal1"></a> · <a href="datenschutz.html" data-t="legal2"></a></p>
   </section>
 </div>
@@ -396,12 +414,12 @@ var qrcode=function(){var t=function(t,r){var e=t,n=g[r],o=null,i=0,a=null,u=[],
       shared:"Im Teilen-Menü übergeben. Wenn du „Bild sichern“ gewählt hast, liegt es jetzt in Fotos.",
       altShot:function(n,w,h){ return "Hintergrundbild für " + n + " mit Kontakt-Code, " + w + " mal " + h + " Pixel"; },
       altQR:"QR-Code, der diese Seite auf dem Handy öffnet",
-      sampleMail:"hallo@musterfirma.de"
+      sampleName:"Vorname Nachname", sampleMail:"hallo@musterfirma.de"
     },
     en: {
       h1a:"Your business card", h1b:"always on hand",
       lede:"You get a lock screen wallpaper with a QR code. Anyone who scans it has you in their contacts — no internet needed on either phone.",
-      demoBtn:"See an example", required:"* Required", devLabel:"Phone",
+      demoBtn:"See an example", required:"* Required", devLabel:"Select phone",
       lName:"Name *", phName:"First and last name",
       lMail:"Email *", phMail:"name@example.com",
       more:"More fields",
@@ -444,7 +462,7 @@ var qrcode=function(){var t=function(t,r){var e=t,n=g[r],o=null,i=0,a=null,u=[],
       shared:"Handed to the share sheet. If you chose “Save Image”, it’s in your photos now.",
       altShot:function(n,w,h){ return "Lock screen wallpaper for " + n + " with contact code, " + w + " by " + h + " pixels"; },
       altQR:"QR code that opens this page on your phone",
-      sampleMail:"hello@example.com"
+      sampleName:"First Last", sampleMail:"hello@example.com"
     }
   };
 
@@ -690,13 +708,16 @@ var qrcode=function(){var t=function(t,r){var e=t,n=g[r],o=null,i=0,a=null,u=[],
       var s = el("status"); s.textContent = t.shared; s.hidden = false;
     }).catch(function(){});
   });
-  el("back").addEventListener("click", function(){
-    el("result").hidden = true; el("form").hidden = false; el("f-name").focus();
-  });
+  function zurueck(){
+    el("result").hidden = true; el("form").hidden = false;
+    window.scrollTo(0, 0); el("f-name").focus();
+  }
+  el("back").addEventListener("click", zurueck);
+  el("back2").addEventListener("click", zurueck);
 
   function openDemo(){
     var keep = logoImg; logoImg = null;
-    var demo = build({ name:"Katrin Muhl", mail:t.sampleMail,
+    var demo = build({ name:t.sampleName, mail:t.sampleMail,
                        tel:"+49 151 XX XX XX XX", org:"", title:"", url:"" }, device);
     logoImg = keep;
     el("demoimg").src = demo.canvas.toDataURL("image/png");
