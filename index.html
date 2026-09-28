@@ -157,6 +157,7 @@
   #result .legal,#desktop .legal{text-align:center}
   #result .legal{margin-top:var(--s6)}
 
+  .topback{margin:0 0 var(--s5)}
   .shot{display:flex; justify-content:center; margin-top:var(--s5)}
   .shotinner{position:relative; width:160px}
   .shot img{width:160px; height:auto; display:block; border-radius:var(--s3); border:2px solid var(--signal)}
@@ -333,6 +334,7 @@
 
   <!-- ══ Ergebnis (Frames 13 / 19 / 22 / 25) ═══════════════════════ -->
   <section id="result" hidden aria-labelledby="rtitle">
+    <p class="topback"><button type="button" class="linky" id="backtop" data-t="backTop"></button></p>
     <h2 class="micro mark" id="rtitle" tabindex="-1" style="margin:0" data-t="rTitle"></h2>
 
     <div class="shot">
@@ -366,7 +368,7 @@
         <span data-t="coffeeBtn"></span>
       </a>
     </div>
-    <p style="margin:var(--s6) 0 0"><button class="ghost" id="back2" type="button" data-t="back"></button></p>
+    <p style="margin:var(--s6) 0 0"><button class="ghost" id="back2" type="button" data-t="restart"></button></p>
     <p class="legal"><a href="impressum.html" data-t="legal1"></a> · <a href="datenschutz.html" data-t="legal2"></a></p>
   </section>
 </div>
@@ -423,6 +425,7 @@ var qrcode=function(){var t=function(t,r){var e=t,n=g[r],o=null,i=0,a=null,u=[],
       make:"Hintergrundbild erstellen",
       foot:"Open Source und werbefrei", gh:"Quellcode auf GitHub",
       legal1:"Impressum", legal2:"Datenschutz",
+      backTop:"← Zurück", restart:"Von vorne",
       rTitle:"Dein Hintergrundbild", chip:"Lang drücken",
       offline:"Scannen auch offline möglich", save:"Bild sichern",
       carries:"Diese Infos transportiert der QR-Code", back:"Daten ändern",
@@ -471,6 +474,7 @@ var qrcode=function(){var t=function(t,r){var e=t,n=g[r],o=null,i=0,a=null,u=[],
       make:"Create wallpaper",
       foot:"Open source, no ads", gh:"Source on GitHub",
       legal1:"Legal notice", legal2:"Privacy (German)",
+      backTop:"← Back", restart:"Start over",
       rTitle:"Your wallpaper", chip:"Touch & hold",
       offline:"Scans without internet", save:"Save image",
       carries:"What the QR code carries", back:"Edit details",
@@ -753,7 +757,15 @@ var qrcode=function(){var t=function(t,r){var e=t,n=g[r],o=null,i=0,a=null,u=[],
     window.scrollTo(0, 0); el("f-name").focus();
   }
   el("back").addEventListener("click", zurueck);
-  el("back2").addEventListener("click", zurueck);
+  el("backtop").addEventListener("click", zurueck);
+  /* Unten heisst es „Von vorne" — also wirklich alles leeren, nicht nur zurueck. */
+  el("back2").addEventListener("click", function(){
+    FIELDS.forEach(function(id){ el(id).value = ""; el(id).removeAttribute("aria-invalid"); });
+    logoImg = null; el("f-logo").value = "";
+    el("logoset").hidden = true; el("drop").hidden = false;
+    el("more").open = false; el("errs").hidden = true; last = null;
+    zurueck();
+  });
 
   function openDemo(){
     var keep = logoImg; logoImg = null;
