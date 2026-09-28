@@ -209,7 +209,11 @@
                       calc(var(--s7) + env(safe-area-inset-bottom,0px))
                       calc(var(--s5) + env(safe-area-inset-left,0px))}
   dialog#demo::backdrop{background:rgba(0,0,0,.72)}
-  .demohead{display:flex; align-items:center; justify-content:space-between; gap:var(--s4)}
+  /* Platzhalter links so breit wie das Kreuz rechts — sonst schoebe das Kreuz
+     die mittig gesetzte Ueberschrift nach links. */
+  .demohead{display:flex; align-items:center; gap:var(--s4)}
+  .demohead::before{content:""; flex:none; width:44px}
+  .demohead h2{flex:1; text-align:center}
   .xclose{flex:none; width:44px; height:44px; margin:-14px -14px -14px 0; display:grid;
           place-items:center; background:none; border:0; color:var(--fg-72); cursor:pointer}
   .xclose:focus-visible{outline:2px solid var(--signal); outline-offset:2px; border-radius:4px}
@@ -217,7 +221,6 @@
   /* Frame 17: Marke und Erklaertext stehen zentriert, nicht linksbuendig */
   dialog#demo h2,dialog#demo .why{text-align:center}
   dialog#demo .why{color:var(--fg-72); margin:var(--s6) 0 var(--s5)}
-  dialog#demo .why b{font-weight:600; color:var(--fg)}
 
   @media (prefers-reduced-motion:no-preference){
     #result:not([hidden]){animation:in .3s cubic-bezier(.2,.8,.2,1)}
@@ -379,7 +382,7 @@
     </button>
   </div>
   <img id="demoimg" alt="">
-  <p class="why" data-th="demoWhy"></p>
+  <p class="why" data-t="demoWhy"></p>
   <button class="ghost" id="demo-close" type="button" data-t="demoClose"></button>
 </dialog>
 <script>/**
@@ -427,7 +430,7 @@ var qrcode=function(){var t=function(t,r){var e=t,n=g[r],o=null,i=0,a=null,u=[],
       dMark:"Weiter auf dem Handy",
       dNote:"Diese Anwendung ist fürs Handy gebaut. Scanne den Code mit deiner Kamera, um dort weiterzumachen.",
       demoTitle:"Beispiel",
-      demoWhy:"Name und E-Mail reichen. <b>Telefonnummer, Firma, Logo, Position und Website</b> kannst du dazunehmen.",
+      demoWhy:"Name und E-Mail reichen. Telefonnummer, Firma, Logo, Position und Website sind optional.",
       demoClose:"Schließen",
       hdIphone:"So wird es dein Sperrbildschirm",
       hdPixel:"So wird es dein Sperrbildschirm (Pixel)",
@@ -475,7 +478,7 @@ var qrcode=function(){var t=function(t,r){var e=t,n=g[r],o=null,i=0,a=null,u=[],
       dMark:"Continue on your phone",
       dNote:"This tool is built for your phone. Scan the code with your camera to continue there.",
       demoTitle:"Example",
-      demoWhy:"Name and email are enough. You can add a <b>phone number, company, logo, job title and website</b>.",
+      demoWhy:"Name and email are enough. Phone number, company, logo, job title and website are optional.",
       demoClose:"Close",
       hdIphone:"How to set it as your lock screen",
       hdPixel:"How to set it as your lock screen (Pixel)",
