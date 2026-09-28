@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="de">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Impressum — Sperrbildschirm-Visitenkarte</title>
+<style>
+  :root{
+    --bg:#0B0B0C; --line:#2A2A2F;
+    --fg:#FFFFFF; --fg-72:rgba(255,255,255,.72); --fg-50:rgba(255,255,255,.5);
+    --signal:#E4FF32; --mark:#FF3D7F;
+    --face:-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif;
+    --t-display:800 34px/36px var(--face);
+    --t-body:400 15px/24px var(--face);
+    --t-small:400 13px/20px var(--face);
+    --t-micro:700 11px/16px var(--face);
+    --track:.12em;
+    --s1:4px; --s2:8px; --s3:12px; --s4:16px; --s5:24px; --s6:32px; --s7:48px;
+  }
+  *{box-sizing:border-box}
+  body{margin:0; background:var(--bg); color:var(--fg); font:var(--t-body); -webkit-text-size-adjust:100%}
+  /* Etwas breiter als das Werkzeug (393) — laufender Text liest sich bei ~68 Zeichen besser. */
+  .wrap{width:100%; max-width:480px; margin:0 auto; padding-block:var(--s7); padding-inline:var(--s5)}
+  .back{display:inline-block; font:var(--t-body); font-weight:600; color:var(--signal);
+        text-decoration:underline; text-underline-offset:3px; margin-bottom:var(--s6)}
+  h1{font:var(--t-display); letter-spacing:-.03em; margin:0 0 var(--s5); text-wrap:balance}
+  h2{font:var(--t-micro); letter-spacing:var(--track); text-transform:uppercase;
+     color:var(--mark); margin:var(--s6) 0 var(--s2)}
+  p{margin:0 0 var(--s4); color:var(--fg-72)}
+  p.plain{color:var(--fg)}
+  a{color:var(--fg-72); text-underline-offset:3px; word-break:break-word}
+  .stand{font:var(--t-small); color:var(--fg-50); margin-top:var(--s6)}
+  .legal{font:var(--t-small); color:var(--fg-50); margin:var(--s7) 0 0; border-top:1px solid var(--line); padding-top:var(--s5)}
+  .legal a{color:inherit}
+</style>
+
+<div class="wrap">
+  <a class="back" href="index.html">← Zurück zum Werkzeug</a>
+
+  <h1>Impressum</h1>
+
+  <h2>Angaben gemäß § 5 DDG</h2>
+  <p class="plain">Katrin Muhl<br>
+    Tannenweg 5<br>
+    64850 Schaafheim<br>
+    Deutschland</p>
+
+  <h2>Kontakt</h2>
+  <p class="plain">E-Mail: <a href="mailto:katrin.muhl@sage-ux.de">katrin.muhl@sage-ux.de</a></p>
+
+  <h2>Verantwortlich für den Inhalt</h2>
+  <p class="plain">Katrin Muhl, Anschrift wie oben</p>
+
+  <h2>Haftung für Links</h2>
+  <p>Diese Seite verlinkt auf externe Angebote, auf deren Inhalte ich keinen Einfluss habe. Dafür ist der jeweilige Anbieter verantwortlich.</p>
+
+  <h2>Streitbeilegung</h2>
+  <p>Die Online-Streitbeilegungsplattform der EU-Kommission war unter
+    <a href="https://ec.europa.eu/consumers/odr" rel="noopener">ec.europa.eu/consumers/odr</a> erreichbar.
+    Sie wurde zum 20. Juli 2025 eingestellt und steht nicht mehr zur Verfügung.</p>
+  <p>Eine Liste der anerkannten Verbraucherschlichtungsstellen in der EU findest du unter
+    <a href="https://consumer-redress.ec.europa.eu/dispute-resolution-bodies_en" rel="noopener">consumer-redress.ec.europa.eu</a>.
+    Ich bin nicht verpflichtet und nicht bereit, an einem Streitbeilegungsverfahren vor einer Verbraucherschlichtungsstelle teilzunehmen.</p>
+
+  <p class="legal"><a href="index.html">Werkzeug</a> · <a href="datenschutz.html">Datenschutz</a></p>
+</div>
+
+<script data-goatcounter="https://katrinmuhl.goatcounter.com/count"
+        async src="https://gc.zgo.at/count.js"></script>
+</html>

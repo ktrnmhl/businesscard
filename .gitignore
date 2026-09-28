@@ -1,0 +1,8 @@
+# Zwischenstände aus der Entwicklung — gehören nicht ins öffentliche Repo
+index.vor-*.html
+index.*.backup.html
+sperrbildschirm-test.html
+
+# Editor- und Systemkram
+.DS_Store
+.claude/

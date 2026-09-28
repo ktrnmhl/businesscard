@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="de">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Datenschutz — Sperrbildschirm-Visitenkarte</title>
+<style>
+  :root{
+    --bg:#0B0B0C; --line:#2A2A2F;
+    --fg:#FFFFFF; --fg-72:rgba(255,255,255,.72); --fg-50:rgba(255,255,255,.5);
+    --signal:#E4FF32; --mark:#FF3D7F;
+    --face:-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif;
+    --t-display:800 34px/36px var(--face);
+    --t-body:400 15px/24px var(--face);
+    --t-small:400 13px/20px var(--face);
+    --t-micro:700 11px/16px var(--face);
+    --track:.12em;
+    --s1:4px; --s2:8px; --s3:12px; --s4:16px; --s5:24px; --s6:32px; --s7:48px;
+  }
+  *{box-sizing:border-box}
+  body{margin:0; background:var(--bg); color:var(--fg); font:var(--t-body); -webkit-text-size-adjust:100%}
+  /* Etwas breiter als das Werkzeug (393) — laufender Text liest sich bei ~68 Zeichen besser. */
+  .wrap{width:100%; max-width:480px; margin:0 auto; padding-block:var(--s7); padding-inline:var(--s5)}
+  .back{display:inline-block; font:var(--t-body); font-weight:600; color:var(--signal);
+        text-decoration:underline; text-underline-offset:3px; margin-bottom:var(--s6)}
+  h1{font:var(--t-display); letter-spacing:-.03em; margin:0 0 var(--s5); text-wrap:balance}
+  h2{font:var(--t-micro); letter-spacing:var(--track); text-transform:uppercase;
+     color:var(--mark); margin:var(--s6) 0 var(--s2)}
+  p{margin:0 0 var(--s4); color:var(--fg-72)}
+  p.plain{color:var(--fg)}
+  a{color:var(--fg-72); text-underline-offset:3px; word-break:break-word}
+  .stand{font:var(--t-small); color:var(--fg-50); margin-top:var(--s6)}
+  .legal{font:var(--t-small); color:var(--fg-50); margin:var(--s7) 0 0; border-top:1px solid var(--line); padding-top:var(--s5)}
+  .legal a{color:inherit}
+</style>
+
+<div class="wrap">
+  <a class="back" href="index.html">← Zurück zum Werkzeug</a>
+
+  <h1>Datenschutz&shy;erklärung</h1>
+
+  <h2>Verantwortliche</h2>
+  <p class="plain">Katrin Muhl<br>
+    Tannenweg 5<br>
+    64850 Schaafheim<br>
+    Deutschland<br>
+    E-Mail: <a href="mailto:katrin.muhl@sage-ux.de">katrin.muhl@sage-ux.de</a></p>
+
+  <h2>Was dieses Werkzeug tut — und was nicht</h2>
+  <p>Name, E-Mail-Adresse, Telefonnummer, Firma, Position, Website und ein hochgeladenes Logo werden ausschließlich in deinem Browser verarbeitet. Diese Daten werden nicht an einen Server übertragen, nicht gespeichert und nicht ausgewertet. Auch das erzeugte Hintergrundbild entsteht in deinem Browser. Sobald du die Seite schließt, ist alles weg.</p>
+
+  <h2>Aufruf der Seite (Hosting)</h2>
+  <p>Die Seite wird über GitHub Pages bereitgestellt, betrieben von der GitHub B.V. Beim Aufruf überträgt dein Browser technisch notwendige Daten, darunter deine IP-Adresse, Datum und Uhrzeit, die aufgerufene Datei sowie Browser- und Betriebssystemangaben. GitHub verarbeitet diese Daten zum Betrieb und zur Absicherung des Dienstes. Rechtsgrundlage ist Art. 6 Abs. 1 lit. f DSGVO. Eine Verarbeitung in den USA ist dabei nicht ausgeschlossen; GitHub stützt sich auf die Standardvertragsklauseln der EU-Kommission.</p>
+
+  <h2>Besucherzählung</h2>
+  <p>Zur Reichweitenmessung nutze ich GoatCounter. GoatCounter setzt keine Cookies und legt keine Daten in deinem Browser ab. Erfasst werden die aufgerufene Seite, der Verweis-Link, Browser, Betriebssystem, Bildschirmbreite, Sprache und eine grobe Herkunftsregion. Deine IP-Adresse wird dabei nur vorübergehend zur Regionsbestimmung verwendet und nicht gespeichert. Die Daten liegen auf Servern der Hetzner Online GmbH in Deutschland und Finnland. Rechtsgrundlage ist mein berechtigtes Interesse an einer einfachen, datensparsamen Reichweitenmessung, Art. 6 Abs. 1 lit. f DSGVO.</p>
+
+  <h2>Keine Cookies</h2>
+  <p>Diese Seite setzt keine Cookies und verwendet keine vergleichbaren Speichertechniken. Ein Einwilligungsbanner ist deshalb nicht erforderlich.</p>
+
+  <h2>Deine Rechte</h2>
+  <p>Du hast das Recht auf Auskunft, Berichtigung, Löschung, Einschränkung der Verarbeitung, Datenübertragbarkeit sowie Widerspruch gegen Verarbeitungen, die auf berechtigtem Interesse beruhen. Wende dich dafür an die oben genannte Adresse. Außerdem kannst du dich bei der für dich zuständigen Datenschutz-Aufsichtsbehörde beschweren.</p>
+
+  <p class="stand">Stand: 28. September 2026</p>
+
+  <p class="legal"><a href="index.html">Werkzeug</a> · <a href="impressum.html">Impressum</a></p>
+</div>
+
+<script data-goatcounter="https://katrinmuhl.goatcounter.com/count"
+        async src="https://gc.zgo.at/count.js"></script>
+</html>
