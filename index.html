@@ -69,6 +69,9 @@
   .lang button[aria-current="true"]{color:var(--fg)}
   .lang button:focus-visible{outline:2px solid var(--signal); outline-offset:3px}
 
+  /* Dachzeile: der Produktname. Weiss statt Pink, damit er sich von den
+     pinken Abschnittstiteln unterscheidet — er gliedert nicht, er benennt. */
+  .kicker{color:var(--fg-72); margin:0 0 var(--s2)}
   h1{font:var(--t-display); letter-spacing:-.03em; margin:0 0 var(--s4); text-wrap:balance}
   h1 em{font-style:normal; color:var(--signal)}
   .lede{color:var(--fg-72); margin:0 0 var(--s4)}
@@ -241,6 +244,7 @@
 
   <!-- ══ Desktop: Übergabe ans Handy (Frame 23) ════════════════════ -->
   <section id="desktop" hidden>
+    <p class="micro kicker">Scan Me</p>
     <h1><span data-t="h1a"></span> <em data-t="h1b"></em></h1>
     <p class="lede" data-t="lede"></p>
     <p class="d-demo"><button class="ghost" id="d-demo" type="button" data-t="demoBtn"></button></p>
@@ -259,6 +263,7 @@
 
   <!-- ══ Formular (Frames 12 / 14 / 15 / 18 / 24) ══════════════════ -->
   <form id="form" novalidate>
+    <p class="micro kicker">Scan Me</p>
     <h1><span data-t="h1a"></span> <em data-t="h1b"></em></h1>
     <p class="lede" data-t="lede"></p>
 
