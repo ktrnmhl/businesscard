@@ -1,4 +1,4 @@
-# Scan Me
+# Lock screen business card
 
 *Visitenkarte für den Sperrbildschirm*
 
@@ -22,6 +22,9 @@ tools encode a URL that points at a hosted profile. That needs internet on the
 scanning phone, and it stops working the day the service does. This one encodes a
 **vCard 3.0** directly, so the scan works with no connection on either device — on
 a plane, in a basement, at a conference with dead wifi.
+
+*Verified on 28 September 2026: wallpaper generated on one phone, both phones set
+to airplane mode, code scanned — contact details arrived. Not a claim, a test.*
 
 **The placement is measured, not guessed.** The card sits in the area the lock
 screen actually leaves free:

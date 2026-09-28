@@ -6,19 +6,19 @@
 <meta name="theme-color" content="#0B0B0C">
 <!-- Suchmuster eines QR-Codes, Frame 26. Inline, damit index.html allein lauffaehig bleibt. -->
 <link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns=%27http://www.w3.org/2000/svg%27%20viewBox=%270%200%20100%20100%27%3E%3Crect%20width=%27100%27%20height=%27100%27%20rx=%2718.75%27%20fill=%27%23E4FF32%27/%3E%3Crect%20x=%2720%27%20y=%2720%27%20width=%2760%27%20height=%2760%27%20fill=%27%230B0B0C%27/%3E%3Crect%20x=%2728.571%27%20y=%2728.571%27%20width=%2742.857%27%20height=%2742.857%27%20fill=%27%23E4FF32%27/%3E%3Crect%20x=%2737.143%27%20y=%2737.143%27%20width=%2725.714%27%20height=%2725.714%27%20fill=%27%230B0B0C%27/%3E%3C/svg%3E">
-<title>Scan Me — Your business card on your lock screen</title>
+<title>Your business card on your lock screen</title>
 <meta name="description" content="Your QR code on your lock screen. Anyone who scans it has you in their contacts — no internet needed on either phone.">
 <!-- Teilen-Vorschau. Crawler fuehren kein JavaScript aus, deshalb steht hier eine
      feste Sprache: Englisch, weil es niemanden ausschliesst. Die Seite selbst
      schaltet trotzdem nach Browsersprache oder ?lang= um. -->
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://ktrnmhl.github.io/businesscard/">
-<meta property="og:title" content="Scan Me">
+<meta property="og:title" content="Your business card on your lock screen">
 <meta property="og:description" content="Your QR code on your lock screen. Anyone who scans it has you in their contacts — no internet needed on either phone.">
 <meta property="og:image" content="https://ktrnmhl.github.io/businesscard/share.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
-<meta property="og:image:alt" content="Scan Me — a lock screen wallpaper with a QR code that carries your contact details.">
+<meta property="og:image:alt" content="A lock screen wallpaper with a QR code that carries your contact details.">
 <meta property="og:locale" content="en_US">
 <meta property="og:locale:alternate" content="de_DE">
 <meta name="twitter:card" content="summary_large_image">
@@ -69,9 +69,6 @@
   .lang button[aria-current="true"]{color:var(--fg)}
   .lang button:focus-visible{outline:2px solid var(--signal); outline-offset:3px}
 
-  /* Dachzeile: der Produktname. Weiss statt Pink, damit er sich von den
-     pinken Abschnittstiteln unterscheidet — er gliedert nicht, er benennt. */
-  .kicker{color:var(--fg-72); margin:0 0 var(--s3)}
   h1{font:var(--t-display); letter-spacing:-.03em; margin:0 0 var(--s4); text-wrap:balance}
   h1 em{font-style:normal; color:var(--signal)}
   .lede{color:var(--fg-72); margin:0 0 var(--s4)}
@@ -243,7 +240,6 @@
 
   <!-- ══ Desktop: Übergabe ans Handy (Frame 23) ════════════════════ -->
   <section id="desktop" hidden>
-    <p class="micro kicker">Scan Me</p>
     <h1><span data-t="h1a"></span> <em data-t="h1b"></em></h1>
     <p class="lede" data-t="lede"></p>
     <p class="d-demo"><button class="ghost" id="d-demo" type="button" data-t="demoBtn"></button></p>
@@ -262,7 +258,6 @@
 
   <!-- ══ Formular (Frames 12 / 14 / 15 / 18 / 24) ══════════════════ -->
   <form id="form" novalidate>
-    <p class="micro kicker">Scan Me</p>
     <h1><span data-t="h1a"></span> <em data-t="h1b"></em></h1>
     <p class="lede" data-t="lede"></p>
 
@@ -536,11 +531,9 @@ var qrcode=function(){var t=function(t,r){var e=t,n=g[r],o=null,i=0,a=null,u=[],
   function apply(){
     t = T[lang];
     document.documentElement.lang = lang;
-    /* Der Name bleibt stehen, nur die Erklaerung dahinter wechselt —
-       ein Produktname wird nicht uebersetzt. */
-    document.title = lang === "de"
-      ? "Scan Me — Visitenkarte für den Sperrbildschirm"
-      : "Scan Me — Your business card on your lock screen";
+    /* Bewusst kein Produktname, nur eine Beschreibung — ein Name waere
+       markenmaessiger Gebrauch und damit ein Risiko ohne Gegenwert. */
+    document.title = lang === "de" ? "Visitenkarte für den Sperrbildschirm" : "Your business card on your lock screen";
     var n, i, list;
     list = document.querySelectorAll("[data-t]");
     for(i = 0; i < list.length; i++){ n = list[i]; if(t[n.dataset.t] !== undefined) n.textContent = t[n.dataset.t]; }

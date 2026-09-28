@@ -6,3 +6,6 @@ sperrbildschirm-test.html
 # Editor- und Systemkram
 .DS_Store
 .claude/
+
+# Banner-Entwuerfe, gehoeren nicht auf die Webseite
+banner/
