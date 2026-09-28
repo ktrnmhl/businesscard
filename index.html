@@ -532,8 +532,10 @@ var qrcode=function(){var t=function(t,r){var e=t,n=g[r],o=null,i=0,a=null,u=[],
   function apply(){
     t = T[lang];
     document.documentElement.lang = lang;
+    /* Der Name bleibt stehen, nur die Erklaerung dahinter wechselt —
+       ein Produktname wird nicht uebersetzt. */
     document.title = lang === "de"
-      ? "Scan mich — Visitenkarte für den Sperrbildschirm"
+      ? "Scan Me — Visitenkarte für den Sperrbildschirm"
       : "Scan Me — Your business card on your lock screen";
     var n, i, list;
     list = document.querySelectorAll("[data-t]");

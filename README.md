@@ -1,6 +1,6 @@
-# Scan mich
+# Scan Me
 
-*Scan Me — a lock screen business card*
+*Visitenkarte für den Sperrbildschirm*
 
 Your business card as a QR code on your lock screen. Scannable without internet.
 
