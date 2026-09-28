@@ -199,10 +199,15 @@
                       calc(var(--s7) + env(safe-area-inset-bottom,0px))
                       calc(var(--s5) + env(safe-area-inset-left,0px))}
   dialog#demo::backdrop{background:rgba(0,0,0,.72)}
+  .demohead{display:flex; align-items:center; justify-content:space-between; gap:var(--s4)}
+  .xclose{flex:none; width:44px; height:44px; margin:-14px -14px -14px 0; display:grid;
+          place-items:center; background:none; border:0; color:var(--fg-72); cursor:pointer}
+  .xclose:focus-visible{outline:2px solid var(--signal); outline-offset:2px; border-radius:4px}
   dialog#demo img{display:block; width:200px; margin:var(--s5) auto 0; border-radius:var(--s2)}
   /* Frame 17: Marke und Erklaertext stehen zentriert, nicht linksbuendig */
   dialog#demo h2,dialog#demo .why{text-align:center}
   dialog#demo .why{color:var(--fg-72); margin:var(--s6) 0 var(--s5)}
+  dialog#demo .why b{font-weight:600; color:var(--fg)}
 
   @media (prefers-reduced-motion:no-preference){
     #result:not([hidden]){animation:in .3s cubic-bezier(.2,.8,.2,1)}
@@ -354,9 +359,16 @@
 
 <!-- ══ Beispiel über der Seite (Frame 17) ═══════════════════════════ -->
 <dialog id="demo" aria-labelledby="demohd">
-  <h2 class="micro mark" id="demohd" style="margin:0" data-t="demoTitle"></h2>
+  <div class="demohead">
+    <h2 class="micro mark" id="demohd" style="margin:0" data-t="demoTitle"></h2>
+    <button type="button" id="demo-x" class="xclose" aria-label="Schließen">
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+        <path d="M2 2L14 14M14 2L2 14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+      </svg>
+    </button>
+  </div>
   <img id="demoimg" alt="">
-  <p class="why" data-t="demoWhy"></p>
+  <p class="why" data-th="demoWhy"></p>
   <button class="ghost" id="demo-close" type="button" data-t="demoClose"></button>
 </dialog>
 <script>/**
@@ -403,8 +415,8 @@ var qrcode=function(){var t=function(t,r){var e=t,n=g[r],o=null,i=0,a=null,u=[],
       coffeeSay:"Werbefrei und kostenlos.", coffeeBtn:"Kaffeekasse",
       dMark:"Weiter auf dem Handy",
       dNote:"Diese Anwendung ist fürs Handy gebaut. Scanne den Code mit deiner Kamera, um dort weiterzumachen.",
-      demoTitle:"So sieht es aus",
-      demoWhy:"So kommt das Hintergrundbild auf dein Handy. Optional kannst du Telefonnummer, Firma, Logo, Position und Website hinzufügen.",
+      demoTitle:"Beispiel",
+      demoWhy:"Name und E-Mail reichen. <b>Telefonnummer, Firma, Logo, Position und Website</b> kannst du dazunehmen.",
       demoClose:"Schließen",
       hdIphone:"So wird es dein Sperrbildschirm",
       hdPixel:"So wird es dein Sperrbildschirm (Pixel)",
@@ -451,8 +463,8 @@ var qrcode=function(){var t=function(t,r){var e=t,n=g[r],o=null,i=0,a=null,u=[],
       coffeeSay:"Free, no ads.", coffeeBtn:"Buy me a coffee",
       dMark:"Continue on your phone",
       dNote:"This tool is built for your phone. Scan the code with your camera to continue there.",
-      demoTitle:"What it looks like",
-      demoWhy:"This is how the wallpaper looks on your phone. You can also add a phone number, company, logo, job title and website.",
+      demoTitle:"Example",
+      demoWhy:"Name and email are enough. You can add a <b>phone number, company, logo, job title and website</b>.",
       demoClose:"Close",
       hdIphone:"How to set it as your lock screen",
       hdPixel:"How to set it as your lock screen (Pixel)",
@@ -502,6 +514,7 @@ var qrcode=function(){var t=function(t,r){var e=t,n=g[r],o=null,i=0,a=null,u=[],
     list = document.querySelectorAll("[data-tp]");
     for(i = 0; i < list.length; i++){ n = list[i]; if(t[n.dataset.tp] !== undefined) n.placeholder = t[n.dataset.tp]; }
     el("pageqr").alt = t.altQR;
+    el("demo-x").setAttribute("aria-label", t.demoClose);
     list = document.querySelectorAll(".lang button");
     for(i = 0; i < list.length; i++) list[i].setAttribute("aria-current", String(list[i].dataset.lang === lang));
     if(!el("result").hidden) fillResult();
@@ -739,7 +752,9 @@ var qrcode=function(){var t=function(t,r){var e=t,n=g[r],o=null,i=0,a=null,u=[],
   }
   el("demo-open").addEventListener("click", openDemo);
   el("d-demo").addEventListener("click", openDemo);
-  el("demo-close").addEventListener("click", function(){ el("demo").close(); });
+  function demoZu(){ el("demo").close(); }
+  el("demo-close").addEventListener("click", demoZu);
+  el("demo-x").addEventListener("click", demoZu);
 
   /* ═══ Desktop: Übergabe ans Handy (Frame 23) ═══════════════════════ */
   function pageQR(){
