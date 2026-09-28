@@ -108,7 +108,10 @@
     cursor:pointer; list-style:none}
   .disclose > summary::-webkit-details-marker{display:none}
   .disclose > summary:focus-visible{outline:2px solid var(--signal); outline-offset:2px}
-  .disclose > summary svg{flex:none; transition:transform .18s ease; color:var(--signal)}
+  /* 8 px eingerueckt: rechts wie gewohnt, aber nicht an die Kante gedrueckt.
+     Der Schalter ist ohnehin die ganze Zeile, nicht das Zeichen. */
+  .disclose > summary svg{flex:none; margin-right:var(--s2);
+                          transition:transform .18s ease; color:var(--signal)}
   .disclose[open] > summary svg{transform:rotate(180deg)}
   .disclose .inner{padding-bottom:var(--s6)}
   .disclose .inner .field:first-child{margin-top:0}
