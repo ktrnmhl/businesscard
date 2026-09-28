@@ -52,7 +52,8 @@
           gap:var(--s3); margin-bottom:var(--s6)}
   .linky{font:var(--t-body); font-weight:600; color:var(--signal); background:none;
          border:0; padding:0; cursor:pointer; text-decoration:underline; text-underline-offset:3px}
-  .legend{color:var(--fg-50)}
+  /* Legende, kein Feldname — deshalb leiser als die 11-px-Labels daneben */
+  .legend{color:var(--fg-50); font-weight:500}
 
   .seg{display:grid; grid-template-columns:1fr 1fr; height:44px; padding:4px;
        background:var(--surface); border:1px solid var(--line); border-radius:var(--r-field)}
@@ -150,7 +151,7 @@
   .coffee p{font:var(--t-small); color:var(--fg-50); margin:0 0 var(--s3)}
   .coffee a{display:inline-flex; align-items:center; justify-content:center; gap:var(--s2);
             width:156px; height:44px; border:1px solid var(--line); border-radius:var(--r-action);
-            font:var(--t-body); font-weight:700; color:var(--fg-72); text-decoration:none}
+            font:var(--t-body); font-weight:600; color:var(--fg-72); text-decoration:none}
   .coffee a:active{background:var(--surface)}
   .coffee a:focus-visible{outline:2px solid var(--signal); outline-offset:2px}
 
@@ -290,7 +291,7 @@
     <div class="shot">
       <div class="shotinner">
         <img id="out" alt="">
-        <span class="chip" data-t="chip"></span>
+        <span class="chip" id="chip" data-t="chip" hidden></span>
       </div>
     </div>
     <p class="note" data-t="offline"></p>
@@ -415,7 +416,7 @@ var qrcode=function(){var t=function(t,r){var e=t,n=g[r],o=null,i=0,a=null,u=[],
       make:"Create wallpaper",
       foot:"Open source, no ads", gh:"Source on GitHub",
       legal1:"Legal notice", legal2:"Privacy (German)",
-      rTitle:"Your wallpaper", chip:"Touch and hold",
+      rTitle:"Your wallpaper", chip:"Touch & hold",
       offline:"Scans without internet", save:"Save image",
       carries:"What the QR code carries", back:"Edit details",
       coffeeSay:"Free, no ads.", coffeeBtn:"Buy me a coffee",
@@ -615,11 +616,14 @@ var qrcode=function(){var t=function(t,r){var e=t,n=g[r],o=null,i=0,a=null,u=[],
     var out = build(v, device);
     last = { v:v, dev:device, size:out.groesse };
     el("out").src = out.canvas.toDataURL("image/png");
-    pngBlob = null; el("savewrap").hidden = true;
+    /* Genau einer von beiden: der Knopf, wo Teilen geht — sonst der Hinweis. */
+    pngBlob = null; el("savewrap").hidden = true; el("chip").hidden = true;
     out.canvas.toBlob(function(b){
       pngBlob = b; var f = null;
       try{ f = new File([b], "sperrbildschirm.png", { type:"image/png" }); }catch(e){}
-      el("savewrap").hidden = !(f && navigator.canShare && navigator.canShare({ files:[f] }));
+      var kannTeilen = !!(f && navigator.canShare && navigator.canShare({ files:[f] }));
+      el("savewrap").hidden = !kannTeilen;
+      el("chip").hidden = kannTeilen;
     }, "image/png");
     fillResult();
     el("form").hidden = true; el("result").hidden = false; el("status").hidden = true;
