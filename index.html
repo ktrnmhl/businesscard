@@ -299,7 +299,7 @@
           <div class="drop" id="drop">
             <p class="pick" data-t="logoPick"></p>
             <p class="hint" data-th="logoHint"></p>
-            <input type="file" id="f-logo" accept="image/png,image/jpeg,image/webp">
+            <input type="file" id="f-logo" accept="image/png,image/jpeg">
           </div>
           <div class="logoset" id="logoset" hidden>
             <img id="logoprev" alt="">
@@ -417,7 +417,7 @@ var qrcode=function(){var t=function(t,r){var e=t,n=g[r],o=null,i=0,a=null,u=[],
       lTel:"Telefonnummer", phTel:"+49 151 …",
       lOrg:"Firma", phOrg:"Musterfirma",
       lLogo:"Logo", logoPick:"Logo wählen",
-      logoHint:"PNG mit transparentem Hintergrund,<br>min. 200 px breit · max. 2 MB",
+      logoHint:"PNG oder JPEG, min. 200 px breit · max. 2 MB",
       logoRemove:"Entfernen",
       lTitle:"Position", phTitle:"Product Designerin",
       lUrl:"Website", phUrl:"musterfirma.de",
@@ -450,6 +450,8 @@ var qrcode=function(){var t=function(t,r){var e=t,n=g[r],o=null,i=0,a=null,u=[],
       eTelShort:"Die Telefonnummer ist zu kurz — es fehlen Ziffern.",
       eTelLong:"Die Telefonnummer ist zu lang — eine Ziffer zu viel?",
       eLogoBig:"Das Logo ist größer als 2 MB. Bitte wähl eine kleinere Datei.",
+      eLogoTyp:"Das Logo muss eine PNG- oder JPEG-Datei sein.",
+      eLogoSchmal:function(px){ return "Das Logo ist nur " + px + " px breit. Es sollten mindestens 200 px sein."; },
       eLogoRead:"Diese Datei konnte nicht als Bild gelesen werden.",
       shared:"Im Teilen-Menü übergeben. Wenn du „Bild sichern“ gewählt hast, liegt es jetzt in Fotos.",
       altShot:function(n,w,h){ return "Hintergrundbild für " + n + " mit Kontakt-Code, " + w + " mal " + h + " Pixel"; },
@@ -466,7 +468,7 @@ var qrcode=function(){var t=function(t,r){var e=t,n=g[r],o=null,i=0,a=null,u=[],
       lTel:"Phone number", phTel:"+49 151 …",
       lOrg:"Company", phOrg:"Example Co.",
       lLogo:"Logo", logoPick:"Choose a logo",
-      logoHint:"PNG with a transparent background,<br>min. 200 px wide · max. 2 MB",
+      logoHint:"PNG or JPEG, min. 200 px wide · max. 2 MB",
       logoRemove:"Remove",
       lTitle:"Job title", phTitle:"Product Designer",
       lUrl:"Website", phUrl:"example.com",
@@ -499,6 +501,8 @@ var qrcode=function(){var t=function(t,r){var e=t,n=g[r],o=null,i=0,a=null,u=[],
       eTelShort:"That phone number is too short — digits are missing.",
       eTelLong:"That phone number is too long — one digit too many?",
       eLogoBig:"That logo is larger than 2 MB. Please choose a smaller file.",
+      eLogoTyp:"The logo must be a PNG or JPEG file.",
+      eLogoSchmal:function(px){ return "The logo is only " + px + " px wide. It should be at least 200 px."; },
       eLogoRead:"That file could not be read as an image.",
       shared:"Handed to the share sheet. If you chose “Save Image”, it’s in your photos now.",
       altShot:function(n,w,h){ return "Lock screen wallpaper for " + n + " with contact code, " + w + " by " + h + " pixels"; },
@@ -702,18 +706,23 @@ var qrcode=function(){var t=function(t,r){var e=t,n=g[r],o=null,i=0,a=null,u=[],
   setDevice(device);
 
   function logoError(msg){ var e = el("errs"); e.innerHTML = "<li>" + msg + "</li>"; e.hidden = false; }
+  /* accept= ist nur ein Filter im Dateiwaehler, keine Pruefung — man kann dort
+     auf „Alle Dateien" umstellen. Also hier nochmal richtig nachsehen. */
   el("f-logo").addEventListener("change", function(){
-    var f = this.files && this.files[0];
+    var inp = this, f = inp.files && inp.files[0];
     if(!f) return;
-    if(f.size > 2*1024*1024){ this.value = ""; logoError(t.eLogoBig); return; }
+    var weg = function(msg){ inp.value = ""; logoError(msg); };
+    if(f.size > 2*1024*1024) return weg(t.eLogoBig);
+    if(f.type !== "image/png" && f.type !== "image/jpeg") return weg(t.eLogoTyp);
     var rd = new FileReader();
     rd.onload = function(){
       var im = new Image();
       im.onload = function(){
+        if(im.naturalWidth < 200) return weg(t.eLogoSchmal(im.naturalWidth));
         logoImg = im; el("logoprev").src = im.src; el("logoname").textContent = f.name;
         el("drop").hidden = true; el("logoset").hidden = false; el("errs").hidden = true;
       };
-      im.onerror = function(){ logoError(t.eLogoRead); };
+      im.onerror = function(){ weg(t.eLogoRead); };
       im.src = rd.result;
     };
     rd.readAsDataURL(f);
