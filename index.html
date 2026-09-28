@@ -563,14 +563,22 @@ var qrcode=function(){var t=function(t,r){var e=t,n=g[r],o=null,i=0,a=null,u=[],
   });
 
   /* ═══ Gerätemaße aus den Figma-Frames ══════════════════════════════ */
+  /* Drei Kartenhoehen. „logo" steht allein auf einer Zeile ueber dem Firmennamen,
+     deshalb waechst die Karte dort und rutscht nach oben — iPhone 36 pt in den
+     Benachrichtigungsbereich (laeuft von unten zu), Android 37 dp in den
+     Hinweistext (Schnellzugriffe bleiben 35 dp frei). Zonen aus Frame 01 und 20. */
   var DEV = {
-    iphone: { w:393, h:852, ref:[1179,2556], cardX:56.5, cardY:224, cardW:280,
-      plain:{ h:338, qr:196, qdy:32, name:248, tel:274, mail:296 },
-      logo :{ h:354, qr:180, qdy:28, name:224, tel:250, mail:272, row:304 },
+    iphone: { w:393, h:852, ref:[1179,2556], cardW:280,
+      plain:{ y:224, h:338, qr:196, qdy:32, name:248, tel:274, mail:296 },
+      org  :{ y:224, h:354, qr:180, qdy:28, name:224, tel:250, mail:272, org:304 },
+      logo :{ y:212, h:390, qr:180, qdy:28, name:224, tel:250, mail:272,
+              logoY:308, logoH:28, org:344 },
       glow:{ x:196.5, y:376.5, r:286.5 } },
-    android:{ w:412, h:915, ref:[1080,2400], cardX:66, cardY:440, cardW:280,
-      plain:{ h:300, qr:170, qdy:28, name:218, tel:244, mail:266 },
-      logo :{ h:316, qr:154, qdy:28, name:194, tel:220, mail:242, row:274 },
+    android:{ w:412, h:915, ref:[1080,2400], cardW:280,
+      plain:{ y:440, h:300, qr:170, qdy:28, name:218, tel:244, mail:266 },
+      org  :{ y:440, h:316, qr:154, qdy:28, name:194, tel:220, mail:242, org:274 },
+      logo :{ y:420, h:380, qr:170, qdy:28, name:218, tel:244, mail:266,
+              logoY:302, logoH:28, org:338 },
       glow:{ x:206, y:680, r:300 } }
   };
   var device = IOS ? "iphone" : "android";
@@ -620,7 +628,8 @@ var qrcode=function(){var t=function(t,r){var e=t,n=g[r],o=null,i=0,a=null,u=[],
   }
 
   function build(v, dev){
-    var d = DEV[dev], hasRow = !!(logoImg || v.org), L = hasRow ? d.logo : d.plain;
+    var d = DEV[dev];
+    var L = logoImg ? d.logo : (v.org ? d.org : d.plain);
     var q = qrcode(0, "M"); q.addData(vcard(v), "Byte"); q.make();
     var n = q.getModuleCount(), px = pixelsFor(dev), W = px[0], H = px[1], s = H / d.h;
     var cv = document.createElement("canvas"); cv.width = W; cv.height = H;
@@ -634,7 +643,7 @@ var qrcode=function(){var t=function(t,r){var e=t,n=g[r],o=null,i=0,a=null,u=[],
     gl.addColorStop(1, "rgba(42,51,64,0)");
     c.fillStyle = gl; c.fillRect(0, 0, W, H);
 
-    var cw = d.cardW*s, ch = L.h*s, cx = (W - cw)/2, cy = d.cardY*s;
+    var cw = d.cardW*s, ch = L.h*s, cx = (W - cw)/2, cy = L.y*s;
     c.save(); c.shadowColor = "rgba(0,0,0,.40)"; c.shadowBlur = 34*s; c.shadowOffsetY = 12*s;
     roundRect(c, cx, cy, cw, ch, 30*s); c.fillStyle = "#FFFFFF"; c.fill(); c.restore();
 
@@ -654,17 +663,16 @@ var qrcode=function(){var t=function(t,r){var e=t,n=g[r],o=null,i=0,a=null,u=[],
     if(v.tel){ c.font = F(400,15); c.fillText(v.tel, mid, cy + (L.tel + 10)*s); }
     c.fillStyle = "#6E7278"; c.font = F(400,15); c.fillText(v.mail, mid, cy + (L.mail + 10)*s);
 
-    if(hasRow){
-      var rowY = cy + (L.row + 10)*s, lw = 0, lh = 0;
-      if(logoImg){
-        lh = 24*s; lw = logoImg.width/logoImg.height*lh;
-        if(lw > 72*s){ lw = 72*s; lh = logoImg.height/logoImg.width*lw; }
-      }
-      c.font = F(400,13);
-      var tw = v.org ? c.measureText(v.org).width : 0;
-      var gap = (lw && tw) ? 11*s : 0, x0 = mid - (lw + gap + tw)/2;
-      if(logoImg) c.drawImage(logoImg, x0, rowY - lh/2, lw, lh);
-      if(v.org){ c.textAlign = "left"; c.fillStyle = "#6E7278"; c.fillText(v.org, x0 + lw + gap, rowY); c.textAlign = "center"; }
+    /* Logo ueber dem Firmennamen, beide mittig — nicht nebeneinander:
+       die meisten Logos tragen den Firmennamen schon in sich. */
+    if(logoImg && L.logoY !== undefined){
+      var lh = L.logoH*s, lw = logoImg.width/logoImg.height*lh;
+      if(lw > 180*s){ lw = 180*s; lh = logoImg.height/logoImg.width*lw; }
+      c.drawImage(logoImg, mid - lw/2, cy + L.logoY*s + (L.logoH*s - lh)/2, lw, lh);
+    }
+    if(v.org && L.org !== undefined){
+      c.font = F(400,13); c.fillStyle = "#6E7278";
+      c.fillText(v.org, mid, cy + (L.org + 10)*s);
     }
     return { canvas:cv, groesse:[W, H] };
   }
